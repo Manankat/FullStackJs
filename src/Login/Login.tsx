@@ -11,7 +11,7 @@ export default function LoginComponent() {
     return (
         <>
             <Button variant="primary" onClick={handleShow}>
-                Launch demo modal
+                Launch subscription
             </Button>
 
             <Modal show={show} onHide={handleClose}>
