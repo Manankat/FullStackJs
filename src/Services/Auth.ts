@@ -26,7 +26,7 @@ class Authentication {
         }
     }
 
-    async login(data: UserModel): Promise<TokenModel> {
+    async login(data: UserModel) {
         return (await axios(this.url + '/auth/login', {
             headers: {'Content-Type': 'application/json'},
             method: 'POST',
@@ -37,7 +37,7 @@ class Authentication {
         }));
     }
 
-    async register(data: UserModel): Promise<any> {
+    async register(data: UserModel) {
         return (await axios(this.url + '/auth/register', {
             headers: {'Content-Type': 'application/json'},
             method: 'POST',
@@ -47,6 +47,10 @@ class Authentication {
 
     logout(): void {
         localStorage.clear();
+    }
+
+    isLogged(): boolean {
+        return localStorage.getItem('acess_token') !== null;
     }
 }
 
