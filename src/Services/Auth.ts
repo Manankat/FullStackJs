@@ -50,7 +50,7 @@ class Authentication {
     }
 
     isLogged(): boolean {
-        return localStorage.getItem('acess_token') !== null;
+        return localStorage.getItem('access_token') !== null;
     }
 }
 
