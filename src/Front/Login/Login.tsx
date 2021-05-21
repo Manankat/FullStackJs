@@ -4,16 +4,11 @@ import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import {Accordion, Card, Form} from "react-bootstrap";
 
-export default function LoginComponent() {
-    const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+export default function LoginComponent(props: any) {
+    const [show, setShow] = useState(props.truth);
+    const handleClose = () => {setShow(false); props.onChange()};
     return (
         <>
-            <Button variant="primary" onClick={handleShow}>
-                Launch subscription
-            </Button>
-
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>LogIn</Modal.Title>
