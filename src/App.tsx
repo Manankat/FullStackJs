@@ -1,14 +1,10 @@
 import React from 'react';
+import { SomeChild } from "./components/SomeComponent"
 import './App.css';
-import Header from "./Front/Layout/Header";
-import Body from "./Front/Layout/Body";
 
 function App() {
   return (
-      <>
-        <Header/>
-          <Body/>
-      </>
+      < SomeChild/>
   );
 }
 
