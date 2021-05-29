@@ -61,8 +61,11 @@ export default class Game extends Component {
     }
 
     getChess = () => {
+        //获取 6个角
+        let { setTargets } = this.state;
         let { colors } = this.state;
         let position = [];
+        let chesses = [];
         for (var k = 0; k < 6; k++) {
             for (var i = 0; i < 4; i++) {
                 for (var j = 0; j < i + 1; j++) {
@@ -92,6 +95,8 @@ export default class Game extends Component {
             }
         }
 
+
+        //获取6边形上半边
         for (var i = 0; i < 5; i++) {
             for (var j = 0; j < i + 5; j++) {
                 position.push({
@@ -107,6 +112,7 @@ export default class Game extends Component {
             }
         }
 
+        //获取6边形下半边
         for (var i = 5; i < 9; i++) {
             for (var j = 0; j < 13 - i; j++) {
                 position.push({
@@ -122,9 +128,13 @@ export default class Game extends Component {
         }
 
         position = this.sort(position);
+
         console.log(position);
+
         this.setTarget(position);
+
         position = this.isOccupy(position);
+
         return { position };
     }
 
@@ -369,6 +379,10 @@ export default class Game extends Component {
     }
 
     defineAnimatePath = (path, start, end) => {
+        console.log('不要算跳棋动画的啊');
+        console.log('path:', path, '起点:', start, '终点:', end);        //start 是跳棋起跳点    //end 是跳棋落点
+        //console.log(this.getParents(end.locate, path))
+
         return this.scanPath(end.locate, start.locate, path, [end.locate]);
     }
 
@@ -399,6 +413,7 @@ export default class Game extends Component {
     }
 
     getValidPoint = (itemMove, position, allPath, passNode) => {
+        console.log('清算点了 ============================================', '现在的点是', itemMove);
         let path = [];
         let { locate } = itemMove;
         let axises = locate.split('-');
@@ -423,6 +438,7 @@ export default class Game extends Component {
                 }
             });
 
+            //对三条线上的点排序
             arrs = arrs.map((arr) => {
                 arr.push(itemMove);
                 arr = arr.sort((arg1, arg2) => {
@@ -431,6 +447,7 @@ export default class Game extends Component {
                 return arr;
             })
 
+            //获取3条线上6个点
             arrs.map((arr, index) => {
                 let pos = -1;
                 arr.filter((item, i) => {
@@ -686,7 +703,7 @@ export default class Game extends Component {
 
 
         return (
-            <div className="Game" style={{
+            <div className="App" style={{
                 width: 2 * width,
                 height: 2 * rotateY
             }}>
