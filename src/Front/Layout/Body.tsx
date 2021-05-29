@@ -1,5 +1,4 @@
 import { create } from "domain";
-import {useState} from "react";
 import { Button } from "react-bootstrap";
 import AccountManagement from "../AccountManagement/AccountManagement";
 import GameManagement from "../GameManagement/GameManagement";
@@ -12,8 +11,7 @@ enum Type {
     Friends
 }
 
-export default function Body() {
-    const [type, setType] = useState(Type.nothing);
+export default function Body(props: any) {
 
     function create() {
         console.log("Create")
@@ -40,9 +38,9 @@ export default function Body() {
         readyPlayer("87308b0a-2dde-455f-a47a-0fed6d7bad98", "Mananka")
     }
 
-    switch (type) {
-        case Type.accountManagement: return(<AccountManagement></AccountManagement>);
-        case Type.gameManagement: return(<GameManagement></GameManagement>);
+    switch (props.type) {
+        case Type.accountManagement: return(<AccountManagement/>);
+        case Type.gameManagement: return(<GameManagement/>);
         case Type.Friends:
         case Type.nothing:
         default: return(<div>
