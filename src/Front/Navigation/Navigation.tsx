@@ -58,10 +58,10 @@ export default class Navigation extends React.Component<any> {
                             <Nav.Link href="#home">Home</Nav.Link>
                             <Nav.Link href="#link">Link</Nav.Link>
                             <Nav.Link href="#link">Play a Game Now !</Nav.Link>
-                            <NavDropdown title="Account" id="basic-nav-dropdown"
+                            <NavDropdown title="Actions" id="basic-nav-dropdown"
                                          style={{display: Auth.isLogged() ? '' : 'none'}}>
-                                <NavDropdown.Item href="" onClick={() => {this.requestBodyUpdate(LayoutBodyType.accountManagement)}}>Management</NavDropdown.Item>
-                                <NavDropdown.Item href="" onClick={() => {this.requestBodyUpdate(LayoutBodyType.gameManagement)}}>Game Saved</NavDropdown.Item>
+                                <NavDropdown.Item href="" onClick={() => {this.requestBodyUpdate(LayoutBodyType.accountManagement)}}>Account Management</NavDropdown.Item>
+                                <NavDropdown.Item href="" onClick={() => {this.requestBodyUpdate(LayoutBodyType.gameManagement)}}>Game Management</NavDropdown.Item>
                                 <NavDropdown.Item href="" onClick={() => {this.requestBodyUpdate(LayoutBodyType.accountManagement)}}>Friends</NavDropdown.Item>
                                 <NavDropdown.Divider/>
                                 <NavDropdown.Item href="" onClick={this.logout}>Logout</NavDropdown.Item>
