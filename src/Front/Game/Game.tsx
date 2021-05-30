@@ -34,7 +34,7 @@ export default class Game extends React.Component<any> {
                 this.setState({uuid: data.uuid});
             })
             .catch(error => {
-                // window.location.reload();
+                window.location.reload();
                 console.error(error);
             });
     }
@@ -126,8 +126,23 @@ export default class Game extends React.Component<any> {
     }
 
     componentDidMount() {
-        this.addColorBeginning();
-        this.tryToCreateGame();
+        const location = window.location.pathname;
+        if (!Auth.isLogged())
+            window.location.assign("/");
+        if (location.startsWith('/game/') && location.length > 6) {
+            Auth.patchGame(location.substring(6))
+                .then(response => {return response.data})
+                .then((data: GameModel) => {
+                    this.setState({uuid: data.uuid});
+                    //TODO reste
+                })
+                .catch(() => {window.location.reload()});
+        } else if (location.startsWith('/game/')) {
+            window.location.reload();
+        } else {
+            this.tryToCreateGame();
+            this.addColorBeginning();
+        }
     }
 
     getUuid() {
