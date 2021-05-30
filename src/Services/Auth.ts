@@ -53,10 +53,48 @@ class Authentication {
         return localStorage.getItem('access_token') !== null;
     }
 
+    async createGame(data: {username: string, color: number}) {
+        return (await axios(this.url + '/games', {
+            headers: {'Content-Type': 'application/json'},
+            method: 'POST',
+            data: data
+        }));
+    }
+
+    async getGameState(uuid: string) {
+        return (await axios(this.url + '/games/' + uuid, {
+            headers: {'Content-Type': 'application/json'},
+            method: 'GET',
+        }));
+    }
+
+    async deleteGame(uuid: string) {
+        return (await axios(this.url + '/games/' + uuid, {
+            headers: {'Content-Type': 'application/json'},
+            method: 'DELETE',
+        }));
+    }
+
+    async patchGame(uuid: string, data: {username: string, color: number}) {
+        return (await axios(this.url + '/games/players/' + uuid, {
+            headers: {'Content-Type': 'application/json'},
+            method: 'PATCH',
+            data: data
+        }));
+    }
+
+    async patchGameState(uuid:string, gameState: string) {
+        return (await axios(this.url + '/games/state/' + uuid, {
+            headers: {'Content-Type': 'application/json'},
+            method: 'PATCH',
+            data: gameState
+        }));
+    }
+
     async updateUser(data: any) {
         return (await axios(this.url + '/user', {
             headers: {'Content-Type': 'application/json'},
-            method: 'POST',
+            method: 'PATCH',
             data: data
         }));
     }
