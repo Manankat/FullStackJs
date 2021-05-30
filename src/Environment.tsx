@@ -1,5 +1,5 @@
 class EnvironmentProduction {
-    apiUrl = "http://localhost:4000/";
+    apiUrl = "http://localhost:3000/";
 }
 
 export const Environment = new EnvironmentProduction();
