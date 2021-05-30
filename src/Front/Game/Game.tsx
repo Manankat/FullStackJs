@@ -146,6 +146,7 @@ export default class Game extends React.Component {
     render() {
         return (
             <div>
+                <p>Invite other player !</p>
                 {this.table}
             </div>
         )

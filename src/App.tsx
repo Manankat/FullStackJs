@@ -22,7 +22,7 @@ export default class App extends React.Component{
         return (
             <>
                 <Header onChangeBody={this.handleChangeFromHeader.bind(this)}/>
-                <Body type={this.getType()}/>
+                <Body type={this.getType()} onChangeBody={this.handleChangeFromHeader.bind(this)}/>
             </>
         )
     }
