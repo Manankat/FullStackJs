@@ -5,7 +5,7 @@ import Login from "../Login/Login";
 import React from "react";
 import {LayoutBodyType} from "../Layout/Body";
 
-export default class Navigation extends React.Component {
+export default class Navigation extends React.Component<any> {
 
     constructor(props) {
         super(props);
@@ -24,7 +24,6 @@ export default class Navigation extends React.Component {
     }
 
     requestBodyUpdate(type: LayoutBodyType) {
-        // @ts-ignore
         this.props.onRequestToChangeBody(type);
     }
 

@@ -4,26 +4,25 @@ import Header from "./Front/Layout/Header";
 import Body, {LayoutBodyType} from "./Front/Layout/Body";
 
 export default class App extends React.Component{
-    private bodyType: LayoutBodyType;
-
     constructor(props) {
         super(props);
-        this.bodyType = LayoutBodyType.nothing;
+        this.state = {type: LayoutBodyType.nothing};
     }
 
     handleChangeFromHeader(type: LayoutBodyType) {
-        this.bodyType = type;
+        this.setState({r: type});
     }
 
     getType(): LayoutBodyType {
-        return this.bodyType;
+        // @ts-ignore
+        return this.state.type;
     }
 
     render() {
         return (
             <>
-                <Header onChangeBody={this.handleChangeFromHeader}/>
-                <Body type={this.getType()}/>
+                <Header onChangeBody={this.handleChangeFromHeader.bind(this)}/>
+                <Body type={this.getType.bind(this)}/>
             </>
         )
     }

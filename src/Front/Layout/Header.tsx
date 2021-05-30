@@ -6,9 +6,7 @@ export default function Header(props) {
         props.onChangeBody(type);
     }
 
-
     return(
-        // @ts-ignore
         <Navigation onRequestToChangeBody={actualizeBody}/>
     )
 }
