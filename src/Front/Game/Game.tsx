@@ -9,9 +9,15 @@ class Cell
 {
     public color: string;
     public cellSize: number;
-    constructor(public parts: number = 10, public couleur = colors_e.blue) {
+    public rowPosition: number;
+    public colPosition: number;
+    public isEmpty: boolean;
+    constructor(public parts: number = 10, public couleur = colors_e.blue, row: number, col: number) {
         this.cellSize = window.innerHeight / this.parts;
         this.color = colors[couleur];
+        this.rowPosition = row;
+        this.colPosition = col;
+        this.isEmpty = true;
     }
 }
 
@@ -41,33 +47,62 @@ export default class Game extends React.Component<any> {
 
     createGrid(): Array<Array<Cell>> {
         let grid: Array<Array<Cell>> = [];
-        const fill = (number: number) => {
+        const fill = (number: number, rowPosition) => {
             let subGrid: Array<Cell> = [];
+            let col = 0
             while (number) {
-                subGrid.push(new Cell(10, colors_e.nothing));
+                subGrid.push(new Cell(10, colors_e.nothing, rowPosition, col));
                 number--;
+                col++;
             }
             grid.push(subGrid);
         }
-        fill(1);
-        fill(2);
-        fill(3);
-        fill(4);
-        fill(13);
-        fill(12);
-        fill(11);
-        fill(10);
-        fill(9);
-        fill(10);
-        fill(11);
-        fill(12);
-        fill(13);
-        fill(4);
-        fill(3);
-        fill(2);
-        fill(1);
+        fill(1, 0);
+        fill(2, 1);
+        fill(3, 2);
+        fill(4, 3);
+        fill(13, 4);
+        fill(12, 5);
+        fill(11, 6);
+        fill(10, 7);
+        fill(9, 8);
+        fill(10, 9);
+        fill(11, 10);
+        fill(12, 11);
+        fill(13, 12);
+        fill(4, 13);
+        fill(3, 14);
+        fill(2, 15);
+        fill(1, 16);
 
         return grid;
+    }
+
+    addInformationToGridAtTheBeginning(grid: Array<Array<Cell>>) {
+        const fillCell = (beg, end, color) => {
+            for (let i = beg; i < end; i++) {
+                for (let j = 0; j < this.grid[i].length; j++) {
+                    this.grid[i][j].isEmpty = false;
+                    this.grid[i][j].color = color;
+                }
+            }
+        }
+        const fillCellAdj = (line, startPos, reverse, color) => {
+            let maxPos = reverse ? 4 : 1;
+            for (let i = line; i < (line + 4) && i < this.grid.length; i++) {
+                for (let j = startPos; j < this.grid[i].length && j < (startPos + maxPos); j++) {
+                    this.grid[i][j].isEmpty = false;
+                    this.grid[i][j].color = color;
+                }
+                maxPos += reverse ? -1 : 1;
+            }
+        }
+        fillCell(0, 4, 'blue');
+        fillCell(13, 17, 'red');
+        fillCellAdj(4, 0, true, 'green');
+        fillCellAdj(4, 9, true, 'purple');
+        fillCellAdj(9, 0, false, 'violet');
+        fillCellAdj(9, 9, false, 'orange');
     }
 
     createHTMLGrid(grid: Array<Array<Cell>>): JSX.Element {
