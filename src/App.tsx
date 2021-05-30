@@ -10,7 +10,7 @@ export default class App extends React.Component{
     }
 
     handleChangeFromHeader(type: LayoutBodyType) {
-        this.setState({r: type});
+        this.setState({type: type});
     }
 
     getType(): LayoutBodyType {
@@ -22,7 +22,7 @@ export default class App extends React.Component{
         return (
             <>
                 <Header onChangeBody={this.handleChangeFromHeader.bind(this)}/>
-                <Body type={this.getType.bind(this)}/>
+                <Body type={this.getType()}/>
             </>
         )
     }
