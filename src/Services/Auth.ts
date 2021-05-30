@@ -27,8 +27,8 @@ class Authentication {
     }
 
     async login(data: UserModel) {
-        return (await axios(this.url + '/auth/login', {
-            headers: {'Content-Type': 'application/json'},
+        return (await axios(this.url + 'auth/login', {
+            headers: {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'},
             method: 'POST',
             data: data
         }).then((response) => {
@@ -38,8 +38,8 @@ class Authentication {
     }
 
     async register(data: UserModel) {
-        return (await axios(this.url + '/auth/register', {
-            headers: {'Content-Type': 'application/json'},
+        return (await axios(this.url + 'auth/register', {
+            headers: {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'},
             method: 'POST',
             data: data
         }));
@@ -51,6 +51,14 @@ class Authentication {
 
     isLogged(): boolean {
         return localStorage.getItem('access_token') !== null;
+    }
+
+    async updateUser(data: any) {
+        return (await axios(this.url + '/user', {
+            headers: {'Content-Type': 'application/json'},
+            method: 'POST',
+            data: data
+        }));
     }
 }
 

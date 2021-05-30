@@ -18,16 +18,31 @@ export default function LoginComponent(props: any) {
 
     function login(event) {
         event.preventDefault();
-        console.log(username, password);
+        const user = new UserModel();
+        user.password = password;
+        user.username = username;
+        Auth.login(user).then(() => {
+            props.onConnectSuccess();
+            handleClose();
+        }).catch(error => {
+            if (error.message) {
+                props.onErrorMessage(error.message);
+            }
+        });
     }
     function register(event) {
         event.preventDefault();
-        console.log(newusername, newemail, newpassword);
         let user = new UserModel();
         user.email = newemail;
         user.password = newpassword;
         user.username = newusername;
-        Auth.register(user);
+        console.log('submit')
+        Auth.register(user)
+            .catch(error => {
+                if (error.message) {
+                    props.onErrorMessage(error.message);
+                }
+            });
     }
 
     return (

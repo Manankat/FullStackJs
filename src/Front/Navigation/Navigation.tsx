@@ -1,17 +1,17 @@
 import './Navigation.css'
-import {Navbar, Nav, NavDropdown} from "react-bootstrap";
+import {Nav, Navbar, NavDropdown} from "react-bootstrap";
 import {Auth} from "../../Services/Auth";
 import Login from "../Login/Login";
 import React from "react";
-import { sendData, createRoom } from "../../Services/Socket"
-
+import {LayoutBodyType} from "../Layout/Body";
 
 export default class Navigation extends React.Component {
 
-    constructor(props: any) {
+    constructor(props) {
         super(props);
         this.state = {modal: false};
         this.handleClick = this.handleClick.bind(this);
+
     }
 
     handleClick() {
@@ -19,12 +19,33 @@ export default class Navigation extends React.Component {
         this.setState({modal: !this.state.modal});
     }
 
+    handleError(message: String) {
+        console.warn(message);
+    }
+
+    requestBodyUpdate(type: LayoutBodyType) {
+        // @ts-ignore
+        this.props.onRequestToChangeBody(type);
+    }
+
+    handleConnexionSuccess() {
+    }
+
     getModalComponent() {
         // @ts-ignore
         if (this.state.modal) {
-            return <Login truth={true} onChange={this.handleClick}/>
+            return <Login truth={true} onChange={this.handleClick} onConnectSuccess={this.handleConnexionSuccess} onErrorMessage={this.handleError}/>
         }
         return null;
+    }
+
+    componentDidUpdate(prevProps: Readonly<{}>, prevState: Readonly<{}>, snapshot?: any) {
+        console.log(prevProps);
+    }
+
+    logout() {
+        Auth.logout();
+        window.location.reload();
     }
 
     render() {
@@ -40,11 +61,11 @@ export default class Navigation extends React.Component {
                             <Nav.Link href="#link">Play a Game Now !</Nav.Link>
                             <NavDropdown title="Account" id="basic-nav-dropdown"
                                          style={{display: Auth.isLogged() ? '' : 'none'}}>
-                                <NavDropdown.Item href="#action/3.1">Management</NavDropdown.Item>Sa
-                                <NavDropdown.Item href="#action/3.2">Game Saved</NavDropdown.Item>
-                                <NavDropdown.Item href="#action/3.3">Friends</NavDropdown.Item>
+                                <NavDropdown.Item href="" onClick={() => {this.requestBodyUpdate(LayoutBodyType.accountManagement)}}>Management</NavDropdown.Item>
+                                <NavDropdown.Item href="" onClick={() => {this.requestBodyUpdate(LayoutBodyType.accountManagement)}}>Game Saved</NavDropdown.Item>
+                                <NavDropdown.Item href="" onClick={() => {this.requestBodyUpdate(LayoutBodyType.accountManagement)}}>Friends</NavDropdown.Item>
                                 <NavDropdown.Divider/>
-                                <NavDropdown.Item href="#action/3.4">Logout</NavDropdown.Item>
+                                <NavDropdown.Item href="" onClick={this.logout}>Logout</NavDropdown.Item>
                             </NavDropdown>
                             <Nav.Link href="#" style={{display: Auth.isLogged() ? 'none' : ''}} onClick={this.handleClick}>Sign
                                 In !</Nav.Link>
