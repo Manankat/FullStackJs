@@ -2,6 +2,8 @@ import './Color'
 import './Game.css'
 import {colors, colors_e} from "./Color";
 import React from "react";
+import {Auth} from "../../Services/Auth";
+import GameModel from "../../Model/Game";
 
 class Cell
 {
@@ -13,7 +15,7 @@ class Cell
     }
 }
 
-export default class Game extends React.Component {
+export default class Game extends React.Component<any> {
     private readonly table: JSX.Element;
     private readonly grid: Array<Array<Cell>>;
 
@@ -22,7 +24,19 @@ export default class Game extends React.Component {
         this.grid = this.createGrid();
         this.table = this.createHTMLGrid(this.grid);
         this.state = {prevDotColor: '', prevCellColor: '', prevRowPosition: -1,
-            prevColPosition: -1, ownColor: ''}; // props.color
+            prevColPosition: -1, ownColor: '', uuid: ''}; // props.color
+    }
+
+    tryToCreateGame() {
+        Auth.createGame(0)
+            .then(response => {return response.data})
+            .then((data: GameModel) => {
+                this.setState({uuid: data.uuid});
+            })
+            .catch(error => {
+                // window.location.reload();
+                console.error(error);
+            });
     }
 
     createGrid(): Array<Array<Cell>> {
@@ -113,6 +127,12 @@ export default class Game extends React.Component {
 
     componentDidMount() {
         this.addColorBeginning();
+        this.tryToCreateGame();
+    }
+
+    getUuid() {
+        // @ts-ignore
+        return this.state.uuid;
     }
 
     addColorBeginning() {
@@ -127,7 +147,6 @@ export default class Game extends React.Component {
         const fillAdjColor = (line, startPos, reverse, color) => {
             let maxPos = reverse ? 4 : 1;
             for (let i = line; i < (line + 4) && i < this.grid.length; i++) {
-                console.log('ko');
                 for (let j = startPos; j < this.grid[i].length && j < (startPos + maxPos); j++) {
                     const dot = document.querySelector<HTMLElement>(`.dot-${i}-${j}`)
                     if (dot) dot.style.backgroundColor = color;
@@ -145,8 +164,9 @@ export default class Game extends React.Component {
 
     render() {
         return (
+            // @ts-ignore
             <div>
-                <p>Invite other player !</p>
+                <p>Invite other player with this <a href={`http://localhost:4200/game/${this.getUuid()}`}>link</a>!</p>
                 {this.table}
             </div>
         )

@@ -21,7 +21,7 @@ export default function Body(props: any) {
     switch (props.type) {
         case LayoutBodyType.accountManagement: return(<AccountManagement/>);
         case LayoutBodyType.gameManagement: return(<GameManagement onChangeBody={changeBody}/>);
-        case LayoutBodyType.game: return(<Game />)
+        case LayoutBodyType.game: return(<Game onChangeBody={changeBody}/>)
         case LayoutBodyType.Friends:
         case LayoutBodyType.nothing:
         default: return(<div>
