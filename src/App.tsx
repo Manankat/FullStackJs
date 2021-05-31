@@ -1,26 +1,34 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Header from "./Front/Layout/Header";
+import Body, {LayoutBodyType} from "./Front/Layout/Body";
+import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
+import Game from "./Front/Game/Game";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default class App extends React.Component{
+    constructor(props) {
+        super(props);
+        this.state = {type: LayoutBodyType.nothing};
+    }
+
+    handleChangeFromHeader(type: LayoutBodyType) {
+        this.setState({type: type});
+    }
+
+    getType(): LayoutBodyType {
+        // @ts-ignore
+        return this.state.type;
+    }
+
+    render() {
+        return (
+            <Router>
+                <Header onChangeBody={this.handleChangeFromHeader.bind(this)}/>
+                <Body type={this.getType()} onChangeBody={this.handleChangeFromHeader.bind(this)}/>
+                <Switch>
+                    <Route path={'/game/:id'} component={Game}/>
+                </Switch>
+            </Router>
+        )
+    }
 }
-
-export default App;
